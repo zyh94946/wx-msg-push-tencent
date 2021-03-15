@@ -13,7 +13,7 @@ API网关目前开通即送时长12个月100万次免费额度
 
 目前发送的应用消息类型为图文消息(mpnews)，消息内容支持html标签，不超过666K个字节，效果如下
 
-<img src="https://raw.githubusercontent.com/zyh94946/work-wx-msg-push/main/demo/demo.png" />
+<img src="https://raw.githubusercontent.com/zyh94946/wx-msg-push-tencent/main/demo/demo.png" />
 
 不用安装企业微信App，直接通过微信App关注微信插件即可实现在微信App中接收应用消息，还可以选择消息免打扰。
 

@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"github.com/zyh94946/work-wx-msg-push/config"
+	"github.com/zyh94946/wx-msg-push-tencent/config"
 	"io/ioutil"
 	"net/http"
 	"strconv"

@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zyh94946/work-wx-msg-push/config"
+	"github.com/zyh94946/wx-msg-push-tencent/config"
 	"io"
 	"io/ioutil"
 	"net/http"

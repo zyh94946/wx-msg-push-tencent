@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/tencentyun/scf-go-lib/cloudfunction"
 	"github.com/tencentyun/scf-go-lib/events"
-	"github.com/zyh94946/work-wx-msg-push/api"
-	"github.com/zyh94946/work-wx-msg-push/config"
+	"github.com/zyh94946/wx-msg-push-tencent/api"
+	"github.com/zyh94946/wx-msg-push-tencent/config"
 	"log"
 )
 

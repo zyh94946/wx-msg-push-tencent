@@ -1,4 +1,4 @@
-module github.com/zyh94946/work-wx-msg-push
+module github.com/zyh94946/wx-msg-push-tencent
 
 go 1.15
 
