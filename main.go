@@ -36,7 +36,7 @@ func process(ctx context.Context, event map[string]interface{}) (events.APIGatew
 			Title:        request.Title,
 			ThumbMediaId: config.MediaId,
 			Content:      request.Content,
-			Digest:       request.Content,
+			Digest:       request.Digest,
 		}}},
 		EnableDuplicateCheck:   1,
 		DuplicateCheckInterval: 300,

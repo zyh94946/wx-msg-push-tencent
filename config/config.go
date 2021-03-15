@@ -3,7 +3,9 @@ package config
 import (
 	"encoding/json"
 	"errors"
+	strip "github.com/grokify/html-strip-tags-go"
 	"log"
+	"regexp"
 	"strconv"
 )
 import "os"
@@ -26,23 +28,23 @@ type ApiRequest struct {
 type SimpleRequest struct {
 	Title   string
 	Content string
+	Digest	string
 }
 
-func ParseRequest(event map[string]interface{}) (SimpleRequest, error) {
+func ParseRequest(event map[string]interface{}) (*SimpleRequest, error) {
 	requestPars := ApiRequest{}
 	eventJson, _ := json.Marshal(event)
 	err := json.Unmarshal(eventJson, &requestPars)
 	log.Println("event:", event)
 	log.Println("request:", requestPars, "json error:", err)
 
+	request := &SimpleRequest{}
 	if requestPars.PathParameters["SECRET"] != CorpSecret {
-		return SimpleRequest{}, errors.New("request check fail")
+		return request, errors.New("Request check fail ")
 	}
 
-	request := SimpleRequest{
-		Title:   requestPars.QueryString["title"],
-		Content: requestPars.QueryString["content"],
-	}
+	request.Title = requestPars.QueryString["title"]
+	request.Content = requestPars.QueryString["content"]
 
 	if requestPars.HttpMethod == "POST" {
 		type reqBody struct {
@@ -55,6 +57,15 @@ func ParseRequest(event map[string]interface{}) (SimpleRequest, error) {
 			request.Content = reqBodyPars.Content
 		}
 	}
+
+	if request.Title == "" || request.Content == "" {
+		return request, errors.New("Request params fail ")
+	}
+
+	regBr, _ := regexp.Compile(`<(?i:br)[\S\s]+?>`)
+	request.Digest = regBr.ReplaceAllString(request.Content, "\n")
+
+	request.Digest = strip.StripTags(request.Digest)
 
 	return request, nil
 }
