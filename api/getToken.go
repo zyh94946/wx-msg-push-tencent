@@ -46,13 +46,14 @@ func (at *AccessToken) GetToken(isGetNew bool) (string, error) {
 	if err != nil {
 		return "", errors.New("Get token return error: " + err.Error())
 	}
-	if resp.StatusCode != 200 {
-		return "", errors.New("Get token return error, http: " + resp.Status)
-	}
 
 	defer func() {
 		_ = resp.Body.Close()
 	}()
+
+	if resp.StatusCode != 200 {
+		return "", errors.New("Get token return error, http: " + resp.Status)
+	}
 
 	type tokenResp struct {
 		ErrCode     int64  `json:"errcode"`

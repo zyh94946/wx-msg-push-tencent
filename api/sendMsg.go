@@ -69,13 +69,14 @@ func (mn *MpNewsMsg) Send(at *AccessToken) error {
 	if err != nil {
 		return errors.New("Send msg return error: " + err.Error())
 	}
-	if resp.StatusCode != 200 {
-		return errors.New("Send msg return error, http: " + resp.Status)
-	}
 
 	defer func() {
 		_ = resp.Body.Close()
 	}()
+
+	if resp.StatusCode != 200 {
+		return errors.New("Send msg return error, http: " + resp.Status)
+	}
 
 	type sendMsgResp struct {
 		ErrCode int64  `json:"errcode"`
