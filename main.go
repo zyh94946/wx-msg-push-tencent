@@ -29,20 +29,17 @@ func process(ctx context.Context, event map[string]interface{}) (events.APIGatew
 		CorpSecret: config.CorpSecret,
 	}
 
-	mpNews := api.MpNewsMsg{
-		ToUser:  "@all",
-		AgentId: config.AgentId,
-		MpNews: &api.MpNewsArticles{Articles: []*api.MpNewsArticleItem{{
-			Title:        request.Title,
-			ThumbMediaId: config.MediaId,
-			Content:      request.Content,
-			Digest:       request.Digest,
-		}}},
-		EnableDuplicateCheck:   1,
-		DuplicateCheckInterval: 300,
+	var appMsg api.AppMsg
+
+	switch request.MsgType {
+	case config.MsgTypeMpNews:
+		appMsg = api.NewMpNews(request.Title, request.Content)
+
+	case config.MsgTypeText:
+		appMsg = api.NewText(request.Content)
 	}
 
-	err = mpNews.Send(at)
+	err = api.Send(appMsg, at)
 	if err != nil {
 		log.Println(err)
 	}
