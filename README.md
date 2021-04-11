@@ -11,13 +11,19 @@ API网关目前开通即送时长12个月100万次免费额度
 
 ## 消息效果
 
-<img src="https://raw.githubusercontent.com/zyh94946/wx-msg-push-tencent/main/demo/demo.gif" />
+<details>
+<summary>点击展开</summary>
+<img src="https://raw.githubusercontent.com/zyh94946/wx-msg-push-tencent/main/demo/demo.gif" width="50%" /><img src="https://raw.githubusercontent.com/zyh94946/wx-msg-push-tencent/main/demo/demo_text.png" width="50%" />
+</details>
 
 不用安装企业微信App，直接通过微信App关注微信插件即可实现在微信App中接收应用消息，还可以选择消息免打扰。
 
 ## 消息限制
 
-目前发送的应用消息类型为图文消息(mpnews)，消息内容支持html标签，不超过666K个字节。
+目前支持发送的应用消息类型为：
+
+1. 图文消息(mpnews)，消息内容支持html标签，不超过666K个字节，会自动生成摘要替换br标签为换行符，过滤html标签。
+2. 文本消息(text)，消息内容最长不超过2048个字节，超过将截断。
 
 每企业消息发送不可超过帐号上限数*30人次/天（注：若调用api一次发给1000人，算1000人次；若企业帐号上限是500人，则每天可发送15000人次的消息）
 
@@ -35,11 +41,11 @@ API网关目前开通即送时长12个月100万次免费额度
 
 进入 `应用管理` ， `创建应用` ，完成后复制下 `AgentId` `Secret` 。
 
-进入 `管理工具` ， `素材库` ， `图片` ， `添加图片` （这个图片是图文消息的展示图），上传成功后在图片下载按钮上复制下载地址
+(如果仅使用文本消息可跳过此步) 进入 `管理工具` ， `素材库` ， `图片` ， `添加图片` （这个图片是图文消息的展示图），上传成功后在图片下载按钮上复制下载地址
 
 <img src="https://raw.githubusercontent.com/zyh94946/wx-msg-push-tencent/main/demo/media.png" />
 
-把url的 `media_id` 值复制下备用
+(如果仅使用文本消息可跳过此步) 把url的 `media_id` 值复制下备用
 
 进入 `我的企业` ，把 `企业ID` 复制下，进入 `微信插件` ，用微信APP扫 `邀请关注` 的二维码码即可在微信App中查看企业微信消息。
 
@@ -66,7 +72,7 @@ API网关目前开通即送时长12个月100万次免费额度
 - CORP_ID 企业微信 企业id
 - CORP_SECRET 企业微信 应用Secret
 - AGENT_ID 企业微信 应用AgentId
-- MEDIA_ID 企业微信 图片素材的media_id
+- MEDIA_ID 企业微信 图片素材的media_id(如果仅使用文本消息可随意填写)
 
 `触发器` 配置选择 `自定义配置` ，触发方式选择 `API网关触发`
 
@@ -90,16 +96,18 @@ API网关目前开通即送时长12个月100万次免费额度
 
 ## 使用方法
 
+消息类型值：`text` 代表文本消息，`mpnews` 代表图文消息。为兼容旧版本，不传默认为图文消息。
+
 GET方式
 
-`https://你的Api网关域名/你的云函数名称/CORP_SECRET?title=消息标题&content=消息内容`
+`https://你的Api网关域名/你的云函数名称/CORP_SECRET?title=消息标题&content=消息内容&type=消息类型`
 
 POST方式
 
 ```bash
 $ curl --location --request POST 'https://你的Api网关域名/你的云函数名称/CORP_SECRET' \
 --header 'Content-Type: application/json;charset=utf-8' \
---data-raw '{"title":"消息标题","content":"消息内容"}'
+--data-raw '{"title":"消息标题","content":"消息内容","type":"消息类型"}'
 ```
 
 发送成功状态码返回200，`"Content-Type":"application/json"` body `{"errorCode":0,"errorMessage":""}` 。
@@ -113,3 +121,6 @@ $ curl --location --request POST 'https://你的Api网关域名/你的云函数�
 - 请检查Api网关SECRET参数是否设置
 - 进入云函数后台查看请求日志的具体错误原因
 
+## 更新记录
+
+- 2021-04-11 支持文本消息，优化代码结构方便新增其它消息类型。
