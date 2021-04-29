@@ -2,29 +2,30 @@ package api
 
 import (
 	strip "github.com/grokify/html-strip-tags-go"
-	"github.com/zyh94946/wx-msg-push-tencent/config"
 	"regexp"
 )
 
 // 图文消息（mpnews）
-func NewMpNews(title, content string) *mpNewsMsg {
+func NewMpNews(opts *MsgOpts) *mpNewsMsg {
 	// 将内容中的br标签换成换行符，过滤html标签，生成摘要
 	regBr, _ := regexp.Compile(`<(?i:br)[\S\s]+?>`)
-	digest := regBr.ReplaceAllString(content, "\n")
+	digest := regBr.ReplaceAllString(opts.Content, "\n")
 	digest = strip.StripTags(digest)
 
 	return &mpNewsMsg{
 		msgPublic: msgPublic{
-			ToUser:                 "@all",
-			AgentId:                config.AgentId,
+			ToUser:                 opts.ToUser,
+			ToParty:                opts.ToParty,
+			ToTag:                  opts.ToTag,
+			AgentId:                opts.AgentId,
 			MsgType:                "mpnews",
-			EnableDuplicateCheck:   config.EnableDuplicateCheck,
-			DuplicateCheckInterval: config.DuplicateCheckInterval,
+			EnableDuplicateCheck:   opts.EnableDuplicateCheck,
+			DuplicateCheckInterval: opts.DuplicateCheckInterval,
 		},
 		MpNews: &mpNewsArticles{Articles: []*mpNewsArticleItem{{
-			Title:        title,
-			ThumbMediaId: config.MediaId,
-			Content:      content,
+			Title:        opts.Title,
+			ThumbMediaId: opts.MediaId,
+			Content:      opts.Content,
 			Digest:       digest,
 		}}},
 	}

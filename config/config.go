@@ -28,10 +28,12 @@ type ApiRequest struct {
 }
 
 type SimpleRequest struct {
-	Title   string
-	Content string
-	Digest  string
-	MsgType string
+	Title   string `json:"title"`
+	Content string `json:"content"`
+	MsgType string `json:"type"`
+	ToUser  string `json:"touser"`
+	ToParty string `json:"toparty"`
+	ToTag   string `json:"totag"`
 }
 
 func ParseRequest(event map[string]interface{}) (*SimpleRequest, error) {
@@ -49,25 +51,13 @@ func ParseRequest(event map[string]interface{}) (*SimpleRequest, error) {
 	request.Title = requestPars.QueryString["title"]
 	request.Content = requestPars.QueryString["content"]
 	request.MsgType = requestPars.QueryString["type"]
+	request.ToUser = requestPars.QueryString["touser"]
+	request.ToParty = requestPars.QueryString["toparty"]
+	request.ToTag = requestPars.QueryString["totag"]
 
 	if requestPars.HttpMethod == "POST" {
-		type reqBody struct {
-			Title   string `json:"title"`
-			Content string `json:"content"`
-			Type    string `json:"type"`
-		}
-		reqBodyPars := reqBody{}
-		if err := json.Unmarshal([]byte(requestPars.Body), &reqBodyPars); err != nil {
+		if err := json.Unmarshal([]byte(requestPars.Body), &request); err != nil {
 			return request, err
-		}
-		if reqBodyPars.Title != "" {
-			request.Title = reqBodyPars.Title
-		}
-		if reqBodyPars.Content != "" {
-			request.Content = reqBodyPars.Content
-		}
-		if reqBodyPars.Type != "" {
-			request.MsgType = reqBodyPars.Type
 		}
 	}
 
@@ -77,6 +67,10 @@ func ParseRequest(event map[string]interface{}) (*SimpleRequest, error) {
 
 	if request.MsgType == "" {
 		request.MsgType = MsgTypeMpNews
+	}
+
+	if request.ToUser == "" && request.ToParty == "" && request.ToTag == "" {
+		request.ToUser = "@all"
 	}
 
 	return request, nil

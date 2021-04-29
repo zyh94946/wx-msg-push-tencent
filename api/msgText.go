@@ -1,19 +1,19 @@
 package api
 
-import "github.com/zyh94946/wx-msg-push-tencent/config"
-
 // 文本消息
-func NewText(content string) *textMsg {
+func NewText(opts *MsgOpts) *textMsg {
 	return &textMsg{
 		msgPublic: msgPublic{
-			ToUser:                 "@all",
-			AgentId:                config.AgentId,
+			ToUser:                 opts.ToUser,
+			ToParty:                opts.ToParty,
+			ToTag:                  opts.ToTag,
+			AgentId:                opts.AgentId,
 			MsgType:                "text",
-			EnableDuplicateCheck:   config.EnableDuplicateCheck,
-			DuplicateCheckInterval: config.DuplicateCheckInterval,
+			EnableDuplicateCheck:   opts.EnableDuplicateCheck,
+			DuplicateCheckInterval: opts.DuplicateCheckInterval,
 		},
 		Text: textContent{
-			Content: content,
+			Content: opts.Content,
 		},
 	}
 }

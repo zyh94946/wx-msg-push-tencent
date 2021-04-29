@@ -55,6 +55,18 @@ type msgPublic struct {
 	DuplicateCheckInterval int    `json:"duplicate_check_interval,omitempty"` //	否	表示是否重复消息检查的时间间隔，默认1800s，最大不超过4小时
 }
 
+type MsgOpts struct {
+	ToUser                 string
+	ToParty                string
+	ToTag                  string
+	Title                  string
+	Content                string
+	AgentId                int64
+	MediaId                string
+	EnableDuplicateCheck   int
+	DuplicateCheckInterval int
+}
+
 func (mn *msgPublic) sendMsg(msgJson []byte, token string) (error, int64) {
 
 	sendUrl := config.SendMsgUrl

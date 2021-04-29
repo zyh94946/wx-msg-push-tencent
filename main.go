@@ -30,13 +30,24 @@ func process(ctx context.Context, event map[string]interface{}) (events.APIGatew
 	}
 
 	var appMsg api.AppMsg
+	opts := &api.MsgOpts{
+		ToUser:                 request.ToUser,
+		ToParty:                request.ToParty,
+		ToTag:                  request.ToTag,
+		Title:                  request.Title,
+		Content:                request.Content,
+		AgentId:                config.AgentId,
+		MediaId:                config.MediaId,
+		EnableDuplicateCheck:   config.EnableDuplicateCheck,
+		DuplicateCheckInterval: config.DuplicateCheckInterval,
+	}
 
 	switch request.MsgType {
 	case config.MsgTypeMpNews:
-		appMsg = api.NewMpNews(request.Title, request.Content)
+		appMsg = api.NewMpNews(opts)
 
 	case config.MsgTypeText:
-		appMsg = api.NewText(request.Content)
+		appMsg = api.NewText(opts)
 	}
 
 	err = api.Send(appMsg, at)

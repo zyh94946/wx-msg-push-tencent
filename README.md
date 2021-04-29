@@ -98,6 +98,8 @@ API网关目前开通即送时长12个月100万次免费额度
 
 消息类型值：`text` 代表文本消息，`mpnews` 代表图文消息。为兼容旧版本，不传默认为图文消息。
 
+支持推送消息至指定的 `touser`, `toparty`, `totag`。不传默认设置 `touser=@all` 
+
 GET方式
 
 `https://你的Api网关域名/你的云函数名称/CORP_SECRET?title=消息标题&content=消息内容&type=消息类型`
@@ -124,3 +126,4 @@ $ curl --location --request POST 'https://你的Api网关域名/你的云函数�
 ## 更新记录
 
 - 2021-04-11 支持文本消息，优化代码结构方便新增其它消息类型。
+- 2021-04-29 支持推送消息至指定的`touser`, `toparty`, `totag`。
