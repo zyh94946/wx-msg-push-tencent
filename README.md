@@ -63,9 +63,9 @@ API网关目前开通即送时长12个月100万次免费额度
 
 如果想要绑定域名的话可以选择香港地区，免备案。
 
-下载本仓库代码至本地，解压缩。
+从 releases 中下载 `linux-amd64` 的预编译 zip 包。
 
-选择 `自定义创建` ， `运行环境` `Go1` ， `提交方法` 选择 `本地上传文件夹` 选择刚才的代码目录。
+选择 `自定义创建` ， `运行环境` `Go1` ， `提交方法` 选择 `本地上传zip包` 选择刚才的 zip 包。
 
 <img src="https://raw.githubusercontent.com/zyh94946/wx-msg-push-tencent/main/demo/cf1.png" />
 
