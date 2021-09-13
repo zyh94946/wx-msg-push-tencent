@@ -19,6 +19,7 @@ var GetTokenUrl = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=ID&corpse
 var SendMsgUrl = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=ACCESS_TOKEN"
 var MsgTypeMpNews = "mpnews"
 var MsgTypeText = "text"
+var MsgTypeMarkdown = "markdown"
 
 type ApiRequest struct {
 	HttpMethod     string            `json:"httpMethod"`

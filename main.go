@@ -48,6 +48,9 @@ func process(ctx context.Context, event map[string]interface{}) (events.APIGatew
 
 	case config.MsgTypeText:
 		appMsg = api.NewText(opts)
+
+	case config.MsgTypeMarkdown:
+		appMsg = api.NewMarkdown(opts)
 	}
 
 	err = api.Send(appMsg, at)
