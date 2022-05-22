@@ -1,7 +1,9 @@
 
 # 基于腾讯云Serverless实现的企业微信应用消息推送服务
 
-Serverless 云函数目前每月有免费资源使用量40万GBs、免费调用次数100万次
+## Serverless 云函数 计费模式和免费额度于 2022 年 6 月 1 日进行调整，请参考[免费额度](https://cloud.tencent.com/document/product/583/12282)
+
+~~Serverless 云函数目前每月有免费资源使用量40万GBs、免费调用次数100万次~~
 
 API网关目前开通即送时长12个月100万次免费额度
 
